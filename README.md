@@ -6,7 +6,8 @@ To run the Jupyter notebook, Python 3.5+ is required. The following prerequisite
 Python toolkit for testing RL algorithms that provides an implementation for different standard RL environments. 
 
 ```shell
-  $ sudo apt install build-essential python3-dev swig python3-pygame git libosmesa6-dev libgl1-mesa-glx libglfw3
+  $ sudo apt install build-essential python3-dev swig \
+  python3-pygame git libosmesa6-dev libgl1-mesa-glx libglfw3
   $ sudo pip3 install ale-py atari-py AutoROM.accept-rom-license \
   lz4 opencv-python pyvirtualdisplay pyglet importlib-resources \
   Cython cffi glfw imageio lockfile pycparser pillow zipp gym
