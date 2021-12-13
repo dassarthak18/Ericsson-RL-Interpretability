@@ -18,17 +18,10 @@ class MazeEnv(gym.Env):
   D G D D D D C C C C C C o o E E E E
   D D D D D D C C C C C C C E E E E *
 
-  A - Room A
-  a - Hall A
-  B - Room B
-  b - Hall B
-  C - Room C
-  D - Room D
-  E - Room E
-  * - Flag
-  S - Start State
-  G - Goal State
-  o - Door
+  A - Room A, a - Hall A, B - Room B,
+  b - Hall B, C - Room C, D - Room D,
+  E - Room E, * - Flag, S - Start State,
+  G - Goal State, o - Door
   """
   
   metadata = {'render.modes':['human']}
