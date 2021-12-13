@@ -23,6 +23,8 @@ class MazeEnv(gym.Env):
   E - Room E, * - Flag, S - Start State,
   G - Goal State, o - Door
   
+  Can move up, down, left or right.
+  
   A reward of +1 for every flag collected.
   An episode ends when goal state is reached.
   """
