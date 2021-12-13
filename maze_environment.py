@@ -22,6 +22,9 @@ class MazeEnv(gym.Env):
   b - Hall B, C - Room C, D - Room D,
   E - Room E, * - Flag, S - Start State,
   G - Goal State, o - Door
+  
+  A reward of +1 for every flag collected.
+  An episode ends when goal state is reached.
   """
   
   metadata = {'render.modes':['human']}
