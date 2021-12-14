@@ -99,12 +99,20 @@ class MazeEnv(gym.Env):
               self.observation_space = spaces.Box(-high, high, dtype=np.int_)
               
               self.reset()
+              
+              print("Map:")              
+              for i in self.maze:
+                    string = ''
+                    for j in i:
+                          if str(j)[0] = '-':
+                                j = '-'
+                          string = string + DICT[str(j)] + ' '
+                    print(string)
 
        def step(self, action):
 
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
-              
               self.maze = copy.deepcopy(MAP)
               self.x = 5
               self.y = 4
@@ -112,3 +120,12 @@ class MazeEnv(gym.Env):
               self.maze[x][y] = 10
 
        def render(self, mode='human', close=False):
+              print(f"Next action:{action}\nFlags collected: {nb_flags}"
+              print("Map:")
+              for i in self.maze:
+                    string = ''
+                    for j in i:
+                          if str(j)[0] = '-':
+                                j = '-'
+                          string = string + DICT[str(j)] + ' '
+                    print(string)
