@@ -1,5 +1,6 @@
 import copy
 import gym
+import numpy as np
 from gym import spaces
 
 MAP = [[1, 1, 1, 1, 1, -1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5],
@@ -15,6 +16,8 @@ MAP = [[1, 1, 1, 1, 1, -1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5],
        [4, 4, 4, 4, 4, 4, 3 , 3 , 3 , 3 , 3 , -1, 3 , 5, 5, 5, 5, 5],
        [4, 8, 4, 4, 4, 4, 3 , 3 , 3 , 3 , 3 , 3 , 9, -1, 5, 5, 5, 5],
        [4, 4, 4, 4, 4, 4, 3 , 3 , 3 , 3 , 3 , 3 , 3 , 5, 5, 5, 5, -1]]
+
+DICT = {'-1':'*', '0':'S', '1':'A', '2':'B', '3':'C', '4':'D', '5':'E', '6':'a', '7':'b', '8':'G', '9':'o'}
 
 class MazeEnv(gym.Env):
 
@@ -74,6 +77,7 @@ class MazeEnv(gym.Env):
               self.maze[x][y] = 'X'
               
               self.action_space = spaces.Discrete(4)
+              self.observation_space = spaces.Box(-high, high, dtype=np.int_)
 
        def step(self, action):
 
