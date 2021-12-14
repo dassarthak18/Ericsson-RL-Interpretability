@@ -94,7 +94,15 @@ class MazeEnv(gym.Env):
 
        def __init__(self):
               super(MazeEnv, self).__init__()
+              
+              self.action_space = spaces.Discrete(4)
+              self.observation_space = spaces.Box(-high, high, dtype=np.int_)
+              
+              self.reset()
 
+       def step(self, action):
+
+       def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
               
               self.maze = copy.deepcopy(MAP)
@@ -102,12 +110,5 @@ class MazeEnv(gym.Env):
               self.y = 4
               self.loc = 6
               self.maze[x][y] = 10
-              
-              self.action_space = spaces.Discrete(4)
-              self.observation_space = spaces.Box(-high, high, dtype=np.int_)
-
-       def step(self, action):
-
-       def reset(self):
 
        def render(self, mode='human', close=False):
