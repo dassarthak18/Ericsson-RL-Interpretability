@@ -120,7 +120,7 @@ class MazeEnv(gym.Env):
               self.maze[x][y] = 10
 
        def render(self, mode='human', close=False):
-              print(f"Next action:{action}\nFlags collected: {nb_flags}"
+              print(f"Next action:{action}\nFlags collected: {nb_flags}")
               print("Map:")
               for i in self.maze:
                     string = ''
