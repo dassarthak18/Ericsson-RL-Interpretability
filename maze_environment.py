@@ -48,6 +48,8 @@ class MazeEnv(gym.Env):
 
        metadata = {'render.modes':['human']}
        maze = copy.deepcopy(MAP)
+       x = 5
+       y = 4
 
        def __init__(self, arg1, arg2):
               super(MazeEnv, self).__init__()
@@ -57,5 +59,7 @@ class MazeEnv(gym.Env):
 
        def reset(self):
               maze = copy.deepcopy(MAP)
+              x = 5
+              y = 4
 
        def render(self, mode='human', close=False):
