@@ -16,8 +16,6 @@ MAP = [['A', 'A', 'A', 'A', 'A', '*', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'E', 'E
 ['D', 'G', 'D', 'D', 'D', 'D', 'C', 'C', 'C', 'C', 'C', 'C', 'o', 'o', 'E', 'E', 'E', 'E'],
 ['D', 'D', 'D', 'D', 'D', 'D', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'E', 'E', 'E', 'E', '*']]
 
-# MAP[5][4] = 'S' -> Start State       
-
 class MazeEnv(gym.Env):
 
        """
@@ -60,6 +58,7 @@ class MazeEnv(gym.Env):
        def step(self, action):
 
        def reset(self):
+              # MAP[5][4] = 'S' -> Start State
               maze = copy.deepcopy(MAP)
               x = 5
               y = 4
