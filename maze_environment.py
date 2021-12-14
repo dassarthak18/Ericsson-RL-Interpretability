@@ -17,7 +17,7 @@ MAP = [[1, 1, 1, 1, 1, -1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5],
        [4, 8, 4, 4, 4, 4, 3 , 3 , 3 , 3 , 3 , 3 , 9, -1, 5, 5, 5, 5],
        [4, 4, 4, 4, 4, 4, 3 , 3 , 3 , 3 , 3 , 3 , 3 , 5, 5, 5, 5, -1]]
 
-DICT = {'-1':'*', '0':'S', '1':'A', '2':'B', '3':'C', '4':'D', '5':'E', '6':'a', '7':'b', '8':'G', '9':'o'}
+DICT = {'-1':'*', '0':'S', '1':'A', '2':'B', '3':'C', '4':'D', '5':'E', '6':'a', '7':'b', '8':'G', '9':'o', '10':'X'}
 
 class MazeEnv(gym.Env):
 
@@ -43,6 +43,8 @@ class MazeEnv(gym.Env):
        5 - Room E, -1 - Flag, 0 - Start State,
        8 - Goal State, 9 - Door
        
+       10 - Current position
+       
        Map of the Maze as Displayed
        ----------------------------
        A A A A A * B B B B B B B E E E E E
@@ -63,6 +65,8 @@ class MazeEnv(gym.Env):
        b - Hall B, C - Room C, D - Room D,
        E - Room E, * - Flag, S - Start State,
        G - Goal State, o - Door
+       
+       X - Current position
 
        Can move up, down, left or right within a room.
        Can move to another room using doors.
@@ -91,13 +95,13 @@ class MazeEnv(gym.Env):
        def __init__(self):
               super(MazeEnv, self).__init__()
 
-              # MAP[5][4] = 'S' -> Start State
+              # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
               
               self.maze = copy.deepcopy(MAP)
               self.x = 5
               self.y = 4
               self.loc = maze[x][y]
-              self.maze[x][y] = 'X'
+              self.maze[x][y] = 10
               
               self.action_space = spaces.Discrete(4)
               self.observation_space = spaces.Box(-high, high, dtype=np.int_)
