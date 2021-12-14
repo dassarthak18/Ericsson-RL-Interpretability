@@ -38,10 +38,26 @@ class MazeEnv(gym.Env):
        E - Room E, * - Flag, S - Start State,
        G - Goal State, o - Door
 
-       Can move up, down, left or right.
+       Can move up, down, left or right within a room.
+       Can move to another room using doors.
 
        A reward of +1 for every flag collected.
        An episode ends when goal state is reached.
+       
+       Observation:
+              Type: Discrete(3)
+              Num Observation
+              0   x-coordinate
+              1   y-coordinate
+              2   location
+
+       Actions:
+              Type: Discrete(4)
+              Num Action
+              0   Move up
+              1   Move down
+              2   Move left
+              3   Move right
        """
 
        metadata = {'render.modes':['human']}
