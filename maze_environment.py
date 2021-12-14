@@ -61,24 +61,22 @@ class MazeEnv(gym.Env):
        """
 
        metadata = {'render.modes':['human']}
-       maze = copy.deepcopy(MAP)
-       x = 5
-       y = 4
-       ch = maze[x][y]
-       maze[x][y] = 'X'
 
-       def __init__(self, arg1, arg2):
+       def __init__(self):
               super(MazeEnv, self).__init__()
-              self.action_space = spaces.Discrete(N_DISCRETE_ACTIONS)
+
+              # MAP[5][4] = 'S' -> Start State
+              
+              self.maze = copy.deepcopy(MAP)
+              self.x = 5
+              self.y = 4
+              self.loc = maze[x][y]
+              self.maze[x][y] = 'X'
+              
+              self.action_space = spaces.Discrete(4)
 
        def step(self, action):
 
        def reset(self):
-              # MAP[5][4] = 'S' -> Start State
-              maze = copy.deepcopy(MAP)
-              x = 5
-              y = 4
-              ch = maze[x][y]
-              maze[x][y] = 'X'
 
        def render(self, mode='human', close=False):
