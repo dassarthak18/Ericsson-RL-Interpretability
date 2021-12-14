@@ -50,6 +50,8 @@ class MazeEnv(gym.Env):
        maze = copy.deepcopy(MAP)
        x = 5
        y = 4
+       ch = maze[x][y]
+       maze[x][y] = 'X'
 
        def __init__(self, arg1, arg2):
               super(MazeEnv, self).__init__()
@@ -61,5 +63,7 @@ class MazeEnv(gym.Env):
               maze = copy.deepcopy(MAP)
               x = 5
               y = 4
+              ch = maze[x][y]
+              maze[x][y] = 'X'
 
        def render(self, mode='human', close=False):
