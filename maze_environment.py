@@ -79,7 +79,7 @@ class MazeEnv(gym.Env):
               Num Observation   Min  Max
               0   x-coordinate  0    17
               1   y-coordinate  0    12
-              2   location      -9   9
+              2   location      -7   9
 
        Actions:
               Type: Discrete(4)
@@ -100,7 +100,7 @@ class MazeEnv(gym.Env):
               self.maze = copy.deepcopy(MAP)
               self.x = 5
               self.y = 4
-              self.loc = maze[x][y]
+              self.loc = 6
               self.maze[x][y] = 10
               
               self.action_space = spaces.Discrete(4)
