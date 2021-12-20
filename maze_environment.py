@@ -162,7 +162,7 @@ class MazeEnv(gym.Env):
 
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
-              self.maze = copy.deepcopy(MAP)
+              self.maze = copy.copy(MAP)
               self.x = 5
               self.y = 4
               self.loc = 6
