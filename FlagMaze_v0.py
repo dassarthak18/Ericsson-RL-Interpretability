@@ -148,7 +148,10 @@ class MazeEnv(gym.Env):
                                    self.y = self.y + 1 # Take rightward step
                                    self.loc = self.maze[self.x][self.y]
                                    self.maze[self.x][self.y] = 10
-
+              self.step += 1
+              if self.step == 1000:
+                     done = True # Limit agent to 1000 steps
+                     
               if self.loc == 8:
                      done = True # Return done if goal state is reached
               
@@ -163,7 +166,8 @@ class MazeEnv(gym.Env):
 
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
-              self.maze = copy.copy(MAP)
+              self.maze = copy.deepcopy(MAP)
+              self.step = 0
               self.x = 5
               self.y = 4
               self.loc = 6
