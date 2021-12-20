@@ -174,7 +174,7 @@ class MazeEnv(gym.Env):
               for i in self.maze:
                     string = ''
                     for j in i:
-                          if str(j)[0] = '-':
+                          if str(j)[0] == '-':
                                 j = '-'
                           string = string + DICT[str(j)] + ' '
                     print(string)
