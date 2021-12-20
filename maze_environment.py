@@ -19,6 +19,8 @@ MAP = [[1, 1, 1, 1, 1, -1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5],
 
 DICT = {'-':'*', '0':'S', '1':'A', '2':'B', '3':'C', '4':'D', '5':'E', '6':'a', '7':'b', '8':'G', '9':'o', '10':'X'}
 
+ACT_DICT = {'0':'Move up', '1':'Move down', '2':'Move left', '3':'Move right'}
+
 class MazeEnv(gym.Env):
 
        """
@@ -108,8 +110,71 @@ class MazeEnv(gym.Env):
                                 j = '-'
                           string = string + DICT[str(j)] + ' '
                     print(string)
+       
+       Map of the Maze as Stored
+       -------------------------
+       1 1 1 1 1 -1 2 2 2 2 2 2 2 5 5 5 5 5
+       1 1 1 1 1 1 2 2 2 2 2 2 2 5 5 5 5 5
+       1 1 1 1 1 1 2 -2 2 2 2 2 2 5 5 5 5 5
+       1 1 1 1 9 1 2 2 2 2 2 2 2 5 5 -5 5 5
+       6 6 6 6 9 6 7 7 7 2 2 2 2 5 5 5 5 5
+       6 6 6 6 0 9 9 7 9 9 2 2 2 5 5 5 5 5
+       6 9 6 6 6 6 7 7 7 2 2 2 2 5 5 5 5 5
+       4 9 4 4 4 4 7 7 7 2 2 2 2 5 5 5 5 5
+       4 4 4 -4 4 4 7 9 7 2 2 2 2 5 5 5 5 5
+       4 4 4 4 4 4 3 9 3 3 3 3 3 5 5 5 5 5
+       4 4 4 4 4 4 3 3 3 3 3 -3 3 5 5 5 5 5
+       4 8 4 4 4 4 3 3 3 3 3 3 9 9 5 5 5 5
+       4 4 4 4 4 4 3 3 3 3 3 3 3 5 5 5 5 -5
 
        def step(self, action):
+              
+              done = False
+              reward = 0
+              
+              if action == 0:
+                     if self.x != 0: # Cannot move upwards if at the top
+                            if self.maze[self.x-1][self.y] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                                   self.maze[self.x][self.y] = self.loc
+                                   self.x = self.x - 1 # Take upward step
+                                   self.loc = self.maze[self.x][self.y]
+                                   self.maze[self.x][self.y] = 10
+              
+              if action == 1:
+                     if self.x != 17: # Cannot move downwards if at the bottom
+                            if self.maze[self.x+1][self.y] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                                   self.maze[self.x][self.y] = self.loc
+                                   self.x = self.x + 1 # Take downward step
+                                   self.loc = self.maze[self.x][self.y]
+                                   self.maze[self.x][self.y] = 10       
+
+              if action == 2:
+                     if self.y != 0: # Cannot move leftwards if at the leftmost
+                            if self.maze[self.x][self.y-1] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                                   self.maze[self.x][self.y] = self.loc
+                                   self.y = self.y - 1 # Take leftward step
+                                   self.loc = self.maze[self.x][self.y]
+                                   self.maze[self.x][self.y] = 10
+                                   
+              if action == 3:
+                     if self.y != 12: # Cannot move rightwards if at the rightmost
+                            if self.maze[self.y][self.y+1] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                                   self.maze[self.x][self.y] = self.loc
+                                   self.y = self.y + 1 # Take rightward step
+                                   self.loc = self.maze[self.x][self.y]
+                                   self.maze[self.x][self.y] = 10
+
+              if self.loc == 8:
+                     done = True # Return done if goal state is reached
+              
+              if self.loc < 0:
+                     reward = 1 # Immediate reward of +1 on collecting the flag
+                     self.loc = self.loc*(-1) # If flag present, then collect the flag and empty the cell
+
+              observation = [self.x,self.y,self.loc]
+              info = {}
+              
+              return observation, reward, done, info
 
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
@@ -117,10 +182,10 @@ class MazeEnv(gym.Env):
               self.x = 5
               self.y = 4
               self.loc = 6
-              self.maze[x][y] = 10
+              self.maze[self.x][self.y] = 10
 
        def render(self, mode='human', close=False):
-              print(f"Next action:{action}\nFlags collected: {nb_flags}")
+              print(f"Next action:{ACT_DICT[str(action)]}")
               print("Map:")
               for i in self.maze:
                     string = ''
