@@ -1,6 +1,8 @@
 import copy
 import gym
 import numpy as np
+import random
+from datetime import datetime
 from gym import spaces
 
 MAP = [[1, 1, 1, 1, 1, -1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5],
@@ -116,40 +118,42 @@ class MazeEnv(gym.Env):
               
               done = False
               reward = 0
+
+              self.action = action
               
-              if action == 0:
+              if self.action == 0:
                      if self.x != 0: # Cannot move upwards if at the top
-                            if self.maze[self.x-1][self.y] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                            if self.maze[self.x-1][self.y] == self.loc or self.maze[self.x-1][self.y] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.x = self.x - 1 # Take upward step
                                    self.loc = self.maze[self.x][self.y]
                                    self.maze[self.x][self.y] = 10
               
-              if action == 1:
+              if self.action == 1:
                      if self.x != 17: # Cannot move downwards if at the bottom
-                            if self.maze[self.x+1][self.y] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                            if self.maze[self.x+1][self.y] == self.loc or self.maze[self.x+1][self.y] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.x = self.x + 1 # Take downward step
                                    self.loc = self.maze[self.x][self.y]
                                    self.maze[self.x][self.y] = 10       
 
-              if action == 2:
+              if self.action == 2:
                      if self.y != 0: # Cannot move leftwards if at the leftmost
-                            if self.maze[self.x][self.y-1] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                            if self.maze[self.x][self.y-1] == self.loc or self.maze[self.x][self.y-1] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.y = self.y - 1 # Take leftward step
                                    self.loc = self.maze[self.x][self.y]
                                    self.maze[self.x][self.y] = 10
                                    
-              if action == 3:
+              if self.action == 3:
                      if self.y != 12: # Cannot move rightwards if at the rightmost
-                            if self.maze[self.y][self.y+1] == self.loc or self.loc == 0: # If in the same room, or if at the door
+                            if self.maze[self.y][self.y+1] == self.loc or self.maze[self.x][self.y+1] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.y = self.y + 1 # Take rightward step
                                    self.loc = self.maze[self.x][self.y]
                                    self.maze[self.x][self.y] = 10
-              self.step += 1
-              if self.step == 1000:
+              self.nb_step += 1
+              if self.nb_step == 1000:
                      done = True # Limit agent to 1000 steps
                      
               if self.loc == 8:
@@ -167,7 +171,7 @@ class MazeEnv(gym.Env):
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
               self.maze = copy.deepcopy(MAP)
-              self.step = 0
+              self.nb_step = 0
               self.x = 5
               self.y = 4
               self.loc = 6
@@ -176,7 +180,7 @@ class MazeEnv(gym.Env):
               return observation
 
        def render(self, mode='human', close=False):
-              print(f"Next action:{ACT_DICT[str(action)]}")
+              print(f"\nNext action:{ACT_DICT[str(self.action)]}")
               print("Map:")
               for i in self.maze:
                     string = ''
