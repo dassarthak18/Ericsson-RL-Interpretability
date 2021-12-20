@@ -123,7 +123,7 @@ class MazeEnv(gym.Env):
               
               if self.action == 0:
                      if self.x != 0: # Cannot move upwards if at the top
-                            if self.maze[self.x-1][self.y] == self.loc or self.maze[self.x-1][self.y] == 9: # If in the same room, or if at the door
+                            if self.maze[self.x-1][self.y] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x-1][self.y] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.x = self.x - 1 # Take upward step
                                    self.loc = self.maze[self.x][self.y]
@@ -131,7 +131,7 @@ class MazeEnv(gym.Env):
               
               if self.action == 1:
                      if self.x != 17: # Cannot move downwards if at the bottom
-                            if self.maze[self.x+1][self.y] == self.loc or self.maze[self.x+1][self.y] == 9: # If in the same room, or if at the door
+                            if self.maze[self.x+1][self.y] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x+1][self.y] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.x = self.x + 1 # Take downward step
                                    self.loc = self.maze[self.x][self.y]
@@ -139,7 +139,7 @@ class MazeEnv(gym.Env):
 
               if self.action == 2:
                      if self.y != 0: # Cannot move leftwards if at the leftmost
-                            if self.maze[self.x][self.y-1] == self.loc or self.maze[self.x][self.y-1] == 9: # If in the same room, or if at the door
+                            if self.maze[self.x][self.y-1] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x][self.y-1] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.y = self.y - 1 # Take leftward step
                                    self.loc = self.maze[self.x][self.y]
@@ -147,7 +147,7 @@ class MazeEnv(gym.Env):
                                    
               if self.action == 3:
                      if self.y != 12: # Cannot move rightwards if at the rightmost
-                            if self.maze[self.y][self.y+1] == self.loc or self.maze[self.x][self.y+1] == 9: # If in the same room, or if at the door
+                            if self.maze[self.y][self.y+1] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x][self.y+1] == 9: # If in the same room, or if at the door
                                    self.maze[self.x][self.y] = self.loc
                                    self.y = self.y + 1 # Take rightward step
                                    self.loc = self.maze[self.x][self.y]
