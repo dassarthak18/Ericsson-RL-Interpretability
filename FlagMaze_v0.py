@@ -172,6 +172,8 @@ class MazeEnv(gym.Env):
               self.y = 4
               self.loc = 6
               self.maze[self.x][self.y] = 10
+              observation = [self.x,self.y,self.loc]
+              return observation
 
        def render(self, mode='human', close=False):
               print(f"Next action:{ACT_DICT[str(action)]}")
