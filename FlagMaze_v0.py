@@ -98,7 +98,7 @@ class MazeEnv(gym.Env):
               super(MazeEnv, self).__init__()
               
               self.action_space = spaces.Discrete(4)
-              self.observation_space = spaces.Box(-high, high, dtype=np.int_)
+              self.observation_space = spaces.Discrete(3)
               
               self.reset()
               
