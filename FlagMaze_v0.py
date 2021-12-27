@@ -122,11 +122,12 @@ class MazeEnv(gym.Env):
               done = False
               reward = 0
 
-              loop = False
+              AB_loop = False
+              ABCD_loop = False
 
               if len(self.path) == 4:
                      if self.path[0] == action and action not in self.path[1:]: # ABCDABCD loop
-                            loop = True
+                            ABCD_loop = True
 
               if len(self.path) == 4:
                      self.path.pop(0)
@@ -134,7 +135,7 @@ class MazeEnv(gym.Env):
 
               if len(self.path) == 4:
                      if self.path[0] == self.path[2] and self.path[1] == self.path[3]: # ABAB loop
-                            loop = True
+                            AB_loop = True
 
               self.action = action
               new_x = self.x
@@ -177,7 +178,10 @@ class MazeEnv(gym.Env):
               if legal == False: # Negative reward for illegal move
                      reward -= 1
 
-              if loop == True: # Negative reward for looping
+              # Negative reward for looping
+              if AB_loop == True:
+                     reward -= 1
+              if ABCD_loop == True:
                      reward -= 1
               
               self.nb_step += 1
@@ -188,7 +192,7 @@ class MazeEnv(gym.Env):
                      done = True # Return done if goal state is reached
               
               if self.loc < 0:
-                     reward += 1 # Immediate reward of +1 on collecting the flag
+                     reward += 10 # Immediate reward of +1 on collecting the flag
                      self.loc = self.loc*(-1) # If flag present, then collect the flag and empty the cell
 
               observation = [self.x,self.y,self.loc]
