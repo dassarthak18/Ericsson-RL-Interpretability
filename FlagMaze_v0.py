@@ -96,13 +96,15 @@ class MazeEnv(gym.Env):
 
        metadata = {'render.modes':['human']}
 
-       def __init__(self):
+       def __init__(self, steps):
               super(MazeEnv, self).__init__()
               
               self.action_space = spaces.Discrete(4)
               low = np.array([0,0,-7],dtype=np.int_,)
               high = np.array([17,12,9],dtype=np.int_,)
               self.observation_space = spaces.Box(low, high, dtype=np.int)
+
+              self.max_step = steps
               
               self.reset()
               
@@ -120,27 +122,44 @@ class MazeEnv(gym.Env):
               done = False
               reward = 0
 
+              '''
+              if action == self.arr[0] and self.arr[3] != -1: # Negative reward for looping
+                     reward -= 1
+
+              if self.arr[0] == -1:
+                     self.arr[0] = action
+              elif self.arr[1] == -1:
+                     self.arr[1] = action
+              elif self.arr[2] == -1:
+                     self.arr[2] = action
+              elif self.arr[3] == -1:
+                     self.arr[3] = action
+              else:
+                     self.arr[0] = self.arr[1]
+                     self.arr[1] = self.arr[2]
+                     self.arr[2] = self.arr[3]
+                     self.arr[3] = action
+              '''
+
               self.action = action
+              self.path = self.path + str(self.action)
               new_x = self.x
               new_y = self.y
               
-              legal = False
+              not_bounded = False
               
               if self.action == 0 and self.x != 0: # Move up
                      new_x -= 1
-                     legal = True
+                     not_bounded = True
               if self.action == 1 and self.x != 17: # Move down
                      new_x += 1
-                     legal = True
+                     not_bounded = True
               if self.action == 2 and self.y != 0: # Move left
                      new_y -= 1
-                     legal = True
+                     not_bounded = True
               if self.action == 3 and self.y != 12: # Move right
                      new_y += 1
-                     legal = True
-                     
-              if legal == False: # Negative reward for illegal move
-                     reward -= 1
+                     not_bounded = True
               
               cond1 = False
               cond2 = False
@@ -150,16 +169,23 @@ class MazeEnv(gym.Env):
               if np.abs(self.maze[new_x][new_y]) == np.abs(self.loc): # In the same room
                      cond2 = True
 
+              not_stuck = False
+
               if cond1 or cond2:
                      self.maze[self.x][self.y] = self.loc
                      self.x = new_x
                      self.y = new_y
                      self.loc = self.maze[self.x][self.y]
                      self.maze[self.x][self.y] = 10
+                     not_stuck = True
+
+              legal = not_bounded and not_stuck 
+              if legal == False: # Negative reward for illegal move
+                     reward -= 1
               
               self.nb_step += 1
-              if self.nb_step == 1000:
-                     done = True # Limit agent to 1000 steps
+              if self.nb_step == self.max_step:
+                     done = True # Limit agent to a fixed number of steps
                      
               if self.loc == 8:
                      done = True # Return done if goal state is reached
@@ -176,6 +202,8 @@ class MazeEnv(gym.Env):
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
               self.maze = copy.deepcopy(MAP)
+              #self.arr = [-1,-1,-1,-1]
+              self.path = ""
               self.nb_step = 0
               self.x = 5
               self.y = 4
