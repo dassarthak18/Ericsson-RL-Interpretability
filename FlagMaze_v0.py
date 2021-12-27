@@ -124,14 +124,23 @@ class MazeEnv(gym.Env):
               new_x = self.x
               new_y = self.y
               
+              legal = False
+              
               if self.action == 0 and self.x != 0: # Move up
                      new_x -= 1
+                     legal = True
               if self.action == 1 and self.x != 17: # Move down
                      new_x += 1
+                     legal = True
               if self.action == 2 and self.y != 0: # Move left
                      new_y -= 1
+                     legal = True
               if self.action == 3 and self.y != 12: # Move right
                      new_y += 1
+                     legal = True
+                     
+              if legal == False:
+                     reward -= 1
               
               cond1 = False
               cond2 = False
@@ -156,7 +165,7 @@ class MazeEnv(gym.Env):
                      done = True # Return done if goal state is reached
               
               if self.loc < 0:
-                     reward = 1 # Immediate reward of +1 on collecting the flag
+                     reward += 1 # Immediate reward of +1 on collecting the flag
                      self.loc = self.loc*(-1) # If flag present, then collect the flag and empty the cell
 
               observation = [self.x,self.y,self.loc]
