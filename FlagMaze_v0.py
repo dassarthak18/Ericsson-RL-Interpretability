@@ -100,8 +100,9 @@ class MazeEnv(gym.Env):
               super(MazeEnv, self).__init__()
               
               self.action_space = spaces.Discrete(4)
+              low = np.array([0,0,-7],dtype=np.int_,)
               high = np.array([17,12,9],dtype=np.int_,)
-              self.observation_space = spaces.Box(-high, high, dtype=np.int)
+              self.observation_space = spaces.Box(low, high, dtype=np.int)
               
               self.reset()
               
@@ -137,7 +138,7 @@ class MazeEnv(gym.Env):
               
               if np.abs(self.maze[self.x][self.y]) == 9 or np.abs(self.maze[new_x][new_y]) == 9: # At the doorstep
                      cond1 = True
-              if np.abs(self.maze[new_x][new_y] == np.abs(self.loc): # In the same room
+              if np.abs(self.maze[new_x][new_y]) == np.abs(self.loc): # In the same room
                      cond2 = True
 
               if cond1 or cond2:
