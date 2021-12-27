@@ -120,38 +120,25 @@ class MazeEnv(gym.Env):
               reward = 0
 
               self.action = action
+              new_x = self.x
+              new_y = self.y
               
-              if self.action == 0:
-                     if self.x != 0: # Cannot move upwards if at the top
-                            if self.maze[self.x-1][self.y] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x-1][self.y] == 9: # If in the same room, or if at the door
-                                   self.maze[self.x][self.y] = self.loc
-                                   self.x = self.x - 1 # Take upward step
-                                   self.loc = self.maze[self.x][self.y]
-                                   self.maze[self.x][self.y] = 10
-              
-              if self.action == 1:
-                     if self.x != 17: # Cannot move downwards if at the bottom
-                            if self.maze[self.x+1][self.y] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x+1][self.y] == 9: # If in the same room, or if at the door
-                                   self.maze[self.x][self.y] = self.loc
-                                   self.x = self.x + 1 # Take downward step
-                                   self.loc = self.maze[self.x][self.y]
-                                   self.maze[self.x][self.y] = 10       
+              if self.action == 0 and self.x != 0: # Move up
+                     new_x -= 1
+              if self.action == 1 and self.x != 17: # Move down
+                     new_x += 1
+              if self.action == 2 and self.y != 0: # Move left
+                     new_y -= 1
+              if self.action == 3 and self.y != 12: # Move right
+                     new_y += 1
 
-              if self.action == 2:
-                     if self.y != 0: # Cannot move leftwards if at the leftmost
-                            if self.maze[self.x][self.y-1] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x][self.y-1] == 9: # If in the same room, or if at the door
-                                   self.maze[self.x][self.y] = self.loc
-                                   self.y = self.y - 1 # Take leftward step
-                                   self.loc = self.maze[self.x][self.y]
-                                   self.maze[self.x][self.y] = 10
-                                   
-              if self.action == 3:
-                     if self.y != 12: # Cannot move rightwards if at the rightmost
-                            if self.maze[self.y][self.y+1] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[self.x][self.y+1] == 9: # If in the same room, or if at the door
-                                   self.maze[self.x][self.y] = self.loc
-                                   self.y = self.y + 1 # Take rightward step
-                                   self.loc = self.maze[self.x][self.y]
-                                   self.maze[self.x][self.y] = 10
+              if self.maze[new_x][new_y] == self.loc or self.maze[self.x][self.y] == 9 or self.maze[new_x][new_y] == 9: # If in the same room, or if at the door
+                     self.maze[self.x][self.y] = self.loc
+                     self.x = new_x
+                     self.y = new_y
+                     self.loc = self.maze[self.x][self.y]
+                     self.maze[self.x][self.y] = 10
+              
               self.nb_step += 1
               if self.nb_step == 1000:
                      done = True # Limit agent to 1000 steps
