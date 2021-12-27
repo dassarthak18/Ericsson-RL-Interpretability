@@ -122,27 +122,21 @@ class MazeEnv(gym.Env):
               done = False
               reward = 0
 
-              '''
-              if action == self.arr[0] and self.arr[3] != -1: # Negative reward for looping
-                     reward -= 1
+              loop = False
 
-              if self.arr[0] == -1:
-                     self.arr[0] = action
-              elif self.arr[1] == -1:
-                     self.arr[1] = action
-              elif self.arr[2] == -1:
-                     self.arr[2] = action
-              elif self.arr[3] == -1:
-                     self.arr[3] = action
-              else:
-                     self.arr[0] = self.arr[1]
-                     self.arr[1] = self.arr[2]
-                     self.arr[2] = self.arr[3]
-                     self.arr[3] = action
-              '''
+              if len(self.path) == 4:
+                     if self.path[0] == action and action not in self.path[1:]: # ABCDABCD loop
+                            loop = True
+
+              if len(self.path) == 4:
+                     self.path.pop(0)
+              self.path.append(action)
+
+              if len(self.path) == 4:
+                     if self.path[0] == self.path[2] and self.path[1] == self.path[3]: # ABAB loop
+                            loop = True
 
               self.action = action
-              self.path = self.path + str(self.action)
               new_x = self.x
               new_y = self.y
               
@@ -182,6 +176,9 @@ class MazeEnv(gym.Env):
               legal = not_bounded and not_stuck 
               if legal == False: # Negative reward for illegal move
                      reward -= 1
+
+              if loop == True: # Negative reward for looping
+                     reward -= 1
               
               self.nb_step += 1
               if self.nb_step == self.max_step:
@@ -202,8 +199,7 @@ class MazeEnv(gym.Env):
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
               self.maze = copy.deepcopy(MAP)
-              #self.arr = [-1,-1,-1,-1]
-              self.path = ""
+              self.path = []
               self.nb_step = 0
               self.x = 5
               self.y = 4
