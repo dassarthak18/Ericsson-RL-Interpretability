@@ -131,8 +131,16 @@ class MazeEnv(gym.Env):
                      new_y -= 1
               if self.action == 3 and self.y != 12: # Move right
                      new_y += 1
+              
+              cond1 = False
+              cond2 = False
+              
+              if np.abs(self.maze[self.x][self.y]) == 9 or np.abs(self.maze[new_x][new_y]) == 9: # At the doorstep
+                     cond1 = True
+              if np.abs(self.maze[new_x][new_y] == np.abs(self.loc): # In the same room
+                     cond2 = True
 
-              if np.abs(self.maze[new_x][new_y]) == np.abs(self.loc) or np.abs(self.maze[self.x][self.y]) == 9 or np.abs(self.maze[new_x][new_y]) == 9: # If in the same room, or if at the door
+              if cond1 or cond2:
                      self.maze[self.x][self.y] = self.loc
                      self.x = new_x
                      self.y = new_y
