@@ -139,7 +139,7 @@ class MazeEnv(gym.Env):
                      new_y += 1
                      legal = True
                      
-              if legal == False:
+              if legal == False: # Negative reward for illegal move
                      reward -= 1
               
               cond1 = False
