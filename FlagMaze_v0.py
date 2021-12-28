@@ -159,7 +159,7 @@ class MazeEnv(gym.Env):
               cond1 = False
               cond2 = False
               
-              if np.abs(self.maze[self.x][self.y]) == 9 or np.abs(self.maze[new_x][new_y]) == 9: # At the doorstep
+              if np.abs(self.loc) == 9 or np.abs(self.maze[new_x][new_y]) == 9: # At the doorstep
                      cond1 = True
               if np.abs(self.maze[new_x][new_y]) == np.abs(self.loc): # In the same room
                      cond2 = True
