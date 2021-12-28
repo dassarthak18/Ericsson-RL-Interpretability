@@ -81,8 +81,8 @@ class MazeEnv(gym.Env):
        Observation:
               Type: Box(3)
               Num Observation   Min  Max
-              0   x-coordinate  0    17
-              1   y-coordinate  0    12
+              0   x-coordinate  0    12
+              1   y-coordinate  0    17
               2   location      -7   9
 
        Actions:
@@ -101,7 +101,7 @@ class MazeEnv(gym.Env):
               
               self.action_space = spaces.Discrete(4)
               low = np.array([0,0,-7],dtype=np.int_,)
-              high = np.array([17,12,9],dtype=np.int_,)
+              high = np.array([12,17,9],dtype=np.int_,)
               self.observation_space = spaces.Box(low, high, dtype=np.int)
 
               self.max_step = steps
@@ -146,13 +146,13 @@ class MazeEnv(gym.Env):
               if self.action == 0 and self.x != 0: # Move up
                      new_x -= 1
                      not_bounded = True
-              if self.action == 1 and self.x != 17: # Move down
+              if self.action == 1 and self.x != 12: # Move down
                      new_x += 1
                      not_bounded = True
               if self.action == 2 and self.y != 0: # Move left
                      new_y -= 1
                      not_bounded = True
-              if self.action == 3 and self.y != 12: # Move right
+              if self.action == 3 and self.y != 17: # Move right
                      new_y += 1
                      not_bounded = True
               
