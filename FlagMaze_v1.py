@@ -1,6 +1,7 @@
 import copy
 import gym
 import numpy as np
+import random
 from gym import spaces
 
 MAP = [[1, 1, 1, 1, 1, -1, 2, 2, 2, 2, 2, 2, 2, 5, 5, 5, 5, 5],
@@ -72,10 +73,11 @@ class MazeEnv(gym.Env):
 
        Can move up, down, left or right within a room.
        Can move to another room using doors.
+       
+       Non-deterministic in nature - can take the correct action with 0.7 probability,
+       and the other three actions with 0.1 probability each.
 
-       Deterministic in nature.
-
-       A reward of +5 for every new room explored. - Not implemented.
+       A reward of +5 for every new room explored.
        A reward of +10 for every flag collected.
        A penalty of -1 for every illegal move or loop made.
        A reward of +100 for reaching the goal state.
@@ -129,19 +131,20 @@ class MazeEnv(gym.Env):
               AB_loop = False
               ABCD_loop = False
 
+              self.action = self.probability_matrix(action) # Non-determinism in action
+
               if len(self.path) == 4:
-                     if self.path[0] == action and action not in self.path[1:]: # ABCDABCD loop
+                     if self.path[0] == self.action and self.action not in self.path[1:]: # ABCDABCD loop
                             ABCD_loop = True
 
               if len(self.path) == 4:
                      self.path.pop(0)
-              self.path.append(action)
+              self.path.append(self.action)
 
               if len(self.path) == 4:
                      if self.path[0] == self.path[2] and self.path[1] == self.path[3]: # ABAB loop
                             AB_loop = True
 
-              self.action = action
               new_x = self.x
               new_y = self.y
               
@@ -178,9 +181,9 @@ class MazeEnv(gym.Env):
                      self.maze[self.x][self.y] = 10
                      not_stuck = True
 
-              #if np.abs(self.loc) in self.unvisited: # Positive reward for exploring new room/hall
-              #       self.unvisited.remove(np.abs(self.loc))
-              #       reward += 5
+              if np.abs(self.loc) in self.unvisited: # Positive reward for exploring new room/hall
+                     self.unvisited.remove(np.abs(self.loc))
+                     reward += 5
 
               legal = not_bounded and not_stuck 
               if legal == False: # Negative reward for illegal move
@@ -209,6 +212,15 @@ class MazeEnv(gym.Env):
               
               return observation, reward, done, info
 
+       def probability_matrix(self, action):
+              arr = [0,1,2,3]
+              arr.remove(action)
+              x = random.choice([1,2,3,4,5,6,7,8,9,10])
+              if x < 8:
+                     return action
+              else:
+                     return random.choice(arr)
+
        def reset(self):
               # MAP[5][4] = 10; DICT['10'] = 'S' -> Start State
               self.maze = copy.deepcopy(MAP)
@@ -218,7 +230,7 @@ class MazeEnv(gym.Env):
               self.y = 4
               self.loc = 6
               self.maze[self.x][self.y] = 10
-              #self.unvisited = [1,2,3,4,5,7]
+              self.unvisited = [1,2,3,4,5,7]
               observation = [self.x,self.y,self.loc]
               return observation
 
