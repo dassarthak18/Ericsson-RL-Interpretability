@@ -1,5 +1,4 @@
 import copy
-
 import gym
 import numpy as np
 import random
@@ -21,7 +20,7 @@ class SimpleMaze(gym.Env):
        Can move up, down, left or right within a room.
        Can move to another room using doors.
 
-       Deterministic in nature.
+       Deterministic or non-deterministic in nature.
 
        A penalty of -1 for every step taken, -5 if all the flags have been collected.
        A reward of +10 for every flag collected.
