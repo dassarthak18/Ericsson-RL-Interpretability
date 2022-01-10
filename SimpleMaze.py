@@ -17,9 +17,7 @@ class SimpleMaze(gym.Env):
        
        X - Current position
 
-       Can move up, down, left or right within a room.
-       Can move to another room using doors.
-
+       Can move up, down, left or right.
        Deterministic or non-deterministic in nature.
 
        A penalty of -1 for every step taken, -5 if all the flags have been collected.
