@@ -1,7 +1,6 @@
 import gym
 import numpy as np
 import random
-
 from gym import spaces
 
 ACT_DICT = {'0':'Move up', '1':'Move down', '2':'Move left', '3':'Move right'}
@@ -118,17 +117,18 @@ class SimpleMaze(gym.Env):
               self.maze[self.x][self.y] = 4
 
               self.nb_step += 1
-              if self.nb_step == self.max_step:
-                     done = True # Limit agent to a fixed number of steps
-
+              
               if self.loc == 1:
-                     reward += 10 # Immediate reward of +10 on collecting a flag
                      self.loc = 0 # If flag present, then collect the flag and empty the cell
                      self.nb_flags += 1
+                     reward += 10 # Immediate reward of +10 on collecting a flag
 
               if self.loc == 3:
                      done = True # Return done = True if goal state is reached
                      reward += 20 # Immediate reward of +20 for reaching the goal state
+
+              if self.nb_step == self.max_step:
+                     done = True # Limit agent to a fixed number of steps
               
               return [self.x,self.y], reward, done, {}
 
