@@ -1,18 +1,18 @@
-import copy
 import gym
 import numpy as np
 import random
+
 from gym import spaces
 
-DICT = {'0':'0', '1':'*', '2':'S', '3':'G', '4':'X'}
 ACT_DICT = {'0':'Move up', '1':'Move down', '2':'Move left', '3':'Move right'}
+DICT = {'0':'0', '1':'*', '2':'S', '3':'G', '4':'X'}
 
 class SimpleMaze(gym.Env):
 
        """
        Map of the Maze as Stored
        -------------------------
-       A m by n grid (mn > 1) with sqrt(mn) flags, a start state S and a goal state G.
+       A m by n grid (mn > 1) with floor(sqrt(mn)) flags, a start state S and a goal state G.
        The flags, S and G are assigned at random.
        
        X - Current position
@@ -42,8 +42,6 @@ class SimpleMaze(gym.Env):
               2   Move left
               3   Move right
        """
-
-       metadata = {'render.modes':['human']}
 
        def __init__(self, m, n, deterministic, steps=-1): # Default -1; no maximum number of steps
               super(SimpleMaze, self).__init__()
@@ -84,15 +82,16 @@ class SimpleMaze(gym.Env):
               self.maze[self.x][self.y] = 4 # 4 indicates X
               self.loc = 2
               return [self.x,self.y]
-
-       def print(self):
+       
+       def render(self, mode='human', close=False):
+              print(f"\nNext action:{ACT_DICT[str(self.action)]}")
               print("Map:")      
               for i in self.maze:
                      string = ''
                      for j in i:
                             string = string + DICT[str(j)] + ' '
                      print(string)
-
+       
        def step(self, action):
 
               done = False
@@ -145,7 +144,3 @@ class SimpleMaze(gym.Env):
                      return action
               else:
                      return random.choice(arr)
-
-       def render(self, mode='human', close=False):
-              print(f"\nNext action:{ACT_DICT[str(self.action)]}")
-              self.print()
