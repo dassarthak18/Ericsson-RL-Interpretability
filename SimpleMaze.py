@@ -46,7 +46,9 @@ class SimpleMaze(gym.Env):
        def __init__(self, m, n, deterministic, steps=-1): # Default -1; no maximum number of steps
               super(SimpleMaze, self).__init__()
               self.action_space = spaces.Discrete(4)
-              self.observation_space = spaces.Box(np.array([0,0],dtype=np.int_,), np.array([m-1,n-1],dtype=np.int_,), dtype=np.int)
+              low = np.array([0,0],dtype=np.int_,)
+              high = np.array([m-1,n-1],dtype=np.int_,)
+              self.observation_space = spaces.Box(low, high, dtype=np.int)
               self.m = m
               self.n = n
               self.deterministic = deterministic
