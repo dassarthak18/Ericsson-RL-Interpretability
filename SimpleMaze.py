@@ -51,7 +51,12 @@ class SimpleMaze(gym.Env):
               self.deterministic = deterministic
               self.max_step = steps
               self.reset()
-              self.print()
+              print("Map:")      
+              for i in self.maze:
+                     string = ''
+                     for j in i:
+                            string = string + DICT[str(j)] + ' '
+                     print(string)
 
        def reset(self):
               maze = []
