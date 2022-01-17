@@ -139,7 +139,7 @@ class SimpleMaze(gym.Env):
 
        def probability_matrix(self, action):
               """
-              Introduces non-determinism - returns the correct action with 0.7 probability,
+              Introduces non-determinism - returns the intended action with 0.7 probability,
               and the other three actions with 0.1 probability each.
               """
               arr = [0,1,2,3]
