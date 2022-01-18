@@ -200,7 +200,7 @@ class MazeEnv(gym.Env):
                      reward += 100
               
               if self.loc < 0:
-                     reward += 10 # Immediate reward of +1 on collecting the flag
+                     reward += 10 # Immediate reward of +10 on collecting the flag
                      self.loc = np.abs(self.loc) # If flag present, then collect the flag and empty the cell
 
               observation = [self.x,self.y,self.loc]
