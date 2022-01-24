@@ -42,8 +42,8 @@ A Python machine learning library that features various classification, regressi
 
 ## Other Prerequisites
 
-* Pandas - A Python toolkit for data manipulation and analysis.
-* tqdm - A Python library to enable iterables to show a smart progress meter. 
+* **Pandas** - A Python toolkit for data manipulation and analysis.
+* **tqdm** - A Python library to enable iterables to show a smart progress meter. 
 
 ```shell
   $ sudo pip3 install pandas tqdm
