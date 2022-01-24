@@ -32,10 +32,19 @@ A deep RL library for Keras that has implementations of state-of-the-art RL algo
   $ sudo pip3 install keras−rl2
 ```
 
-## Installing tqdm
+## Installing SciKit-Learn
 
-A Python library to enable iterables to show a smart progress meter. 
+A Python machine learning library that features various classification, regression and clustering algorithms including decision tree classifiers. 
 
 ```shell
-  $ sudo pip3 install tqdm
+  $ sudo pip3 install sklearn
+```
+
+## Other Prerequisites
+
+* Pandas - A Python toolkit for data manipulation and analysis.
+* tqdm - A Python library to enable iterables to show a smart progress meter. 
+
+```shell
+  $ sudo pip3 install pandas tqdm
 ```
