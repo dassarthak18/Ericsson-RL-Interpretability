@@ -26,7 +26,7 @@ Must be installed to allow usage of OpenAI Gym's Box2D and Atari environments.
 
 ## Installing Keras-RL2
 
-A deep RL library for Keras that has implementations of state-of-the-art RL algorithms such as DQN, DDPG, NAF, CEM and SARSA. Integrates with OpenAI Gym out of the box, and has support for TensorFlow 2. 
+A deep RL library for Keras that has implementations of state-of-the-art RL algorithms such as DQN, CEM and SARSA. Integrates with OpenAI Gym out of the box, and has support for TensorFlow 2. 
 
 ```shell
   $ sudo pip3 install keras−rl2
