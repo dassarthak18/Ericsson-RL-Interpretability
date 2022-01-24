@@ -18,7 +18,7 @@ A Python toolkit for testing RL algorithms that provides an implementation for d
 Must be installed to allow usage of OpenAI Gym's Box2D and Atari environments.
 
 1. To install Box2D , a 2D Game Physics for Python which runs environments such as Lunar Lander and Mountain Car, one can visit their [github repository](https://github.com/pybox2d/pybox2d) and follow the installation guide.
-2. In order to import ROMs for Atari 2600 environments, one needs to download Roms.rar from the [Atari 2600 VCS ROM Collection](http://www.atarimania.com/rom_collection_archive_atari_2600_roms.html). The archive must then be extracted, followed by the bash command:
+2. In order to import ROMs for Atari 2600 environments, one needs to download RoTms.rar from the [Atari 2600 VCS ROM Collection](http://www.atarimania.com/rom_collection_archive_atari_2600_roms.html). The archive must then be extracted, followed by the bash command:
 
 ```shell
    $ python3 −m atari_py.import_roms <path-to-folder>
@@ -42,9 +42,10 @@ A Python machine learning library that features various classification, regressi
 
 ## Other Prerequisites
 
+* **Numpy** - A Python library for large, multi-dimensional arrays and matrices.
 * **Pandas** - A Python toolkit for data manipulation and analysis.
 * **tqdm** - A Python library to enable iterables to show a smart progress meter. 
 
 ```shell
-  $ sudo pip3 install pandas tqdm
+  $ sudo pip3 install numpy pandas tqdm
 ```
