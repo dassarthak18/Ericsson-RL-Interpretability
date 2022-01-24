@@ -31,3 +31,11 @@ A deep RL library for Keras that has implementations of state-of-the-art RL algo
 ```shell
   $ sudo pip3 install keras−rl2
 ```
+
+## Installing tqdm
+
+Python library to enable iterables to show a smart progress meter. 
+
+```shell
+  $ sudo pip3 install tqdm
+```
