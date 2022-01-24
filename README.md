@@ -3,7 +3,7 @@ To run the Jupyter notebook, Python 3.5+ is required. The following prerequisite
 
 ## Installing OpenAI Gym
 
-Python toolkit for testing RL algorithms that provides an implementation for different standard RL environments. 
+A Python toolkit for testing RL algorithms that provides an implementation for different standard RL environments. 
 
 ```shell
   $ sudo apt install build-essential python3-dev swig \
@@ -34,7 +34,7 @@ A deep RL library for Keras that has implementations of state-of-the-art RL algo
 
 ## Installing tqdm
 
-Python library to enable iterables to show a smart progress meter. 
+A Python library to enable iterables to show a smart progress meter. 
 
 ```shell
   $ sudo pip3 install tqdm
