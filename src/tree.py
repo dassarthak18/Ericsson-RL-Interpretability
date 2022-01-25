@@ -1,9 +1,9 @@
 import numpy as np
-from tqdm import tqdm
 from matplotlib import pyplot as plt
 from pandas import read_csv, qcut
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from src.data import output
+from tqdm import tqdm
 
 def build_tree(env,filename):
   # Defining parameters
