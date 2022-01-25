@@ -18,8 +18,7 @@ def build_tree(filename,n):
     temp = LabelEncoder()
     X_encoded.append(temp.fit_transform(X[i]))
 
-  temp = LabelEncoder()
-  Y_encoded = temp.fit_transform(Y)
+  Y_encoded = np.array(Y)
 
   # Building the Decision Tree
   Tree = DecisionTreeClassifier()

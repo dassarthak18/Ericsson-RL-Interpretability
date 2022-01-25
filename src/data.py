@@ -1,14 +1,12 @@
 import numpy as np
 from tqdm import tqdm
 
-def output(tup):
-       # Temporary arrangement until ANN output is found
-       sum = 0
-       for i in tup:
-              sum += i
-       return sum
+def output(model,tup):
+       # Returning output from ANN model
+       x = np.array([list(tup)]).reshape(1,1,len(tup))
+       return np.argmax(model.predict(x))
 
-def dataset(env,filename="agent_data.csv",num=100000):
+def dataset(env,model,filename="agent_data.csv",num=100000):
        # Obtaining parameters for ANN to DT conversion
        low = env.observation_space.low.tolist()
        high = env.observation_space.high.tolist()
@@ -34,6 +32,6 @@ def dataset(env,filename="agent_data.csv",num=100000):
            string = ''
            for i in range(n):
                string = string + str(tup[i]) + ','
-           string = string + str(output(tup)) + "\n"
+           string = string + str(output(model,tup)) + "\n"
            f.write(string)
        f.close()
