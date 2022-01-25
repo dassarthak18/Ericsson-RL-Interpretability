@@ -10,7 +10,7 @@ from rl.agents import SARSAAgent
 from rl.policy import BoltzmannQPolicy
 from rl.memory import EpisodeParameterMemory, SequentialMemory
 
-def cem(env,steps):
+def cem(env,steps=100000):
        model = Sequential()
        model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
        model.add(Dense(16))
@@ -26,7 +26,7 @@ def cem(env,steps):
        cem.fit(env, nb_steps=steps, visualize=False, verbose=1)
        return model, cem
 
-def dqn(env,steps):
+def dqn(env,steps=50000):
        model = Sequential()
        model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
        model.add(Dense(16))
@@ -42,7 +42,7 @@ def dqn(env,steps):
        dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
        return model, dqn
 
-def duel_dqn(env,steps):
+def duel_dqn(env,steps=50000):
        model = Sequential()
        model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
        model.add(Dense(16))
@@ -58,7 +58,7 @@ def duel_dqn(env,steps):
        dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
        return model, dqn
 
-def sarsa(env,steps):
+def sarsa(env,steps=50000):
        model = Sequential()
        model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
        model.add(Dense(16))
