@@ -42,10 +42,9 @@ A Python machine learning library that features various classification, regressi
 
 ## Other Prerequisites
 
-* **Numpy** - A Python library for large, multi-dimensional arrays and matrices.
 * **Pandas** - A Python toolkit for data manipulation and analysis.
 * **tqdm** - A Python library to enable iterables to show a smart progress meter. 
 
 ```shell
-  $ sudo pip3 install numpy pandas tqdm
+  $ sudo pip3 install pandas tqdm
 ```
