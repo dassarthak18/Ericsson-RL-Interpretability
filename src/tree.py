@@ -1,11 +1,11 @@
 import numpy as np
+from tqdm import tqdm
 from matplotlib import pyplot as plt
-from pandas import read_csv, qcut
+from pandas import read_csv, cut
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from src.data import output
-from tqdm import tqdm
 
-def build_tree(env,filename):
+def build_tree(env,filename,num=None):
   # Defining parameters
   low = env.observation_space.low
   high = env.observation_space.high
@@ -23,19 +23,19 @@ def build_tree(env,filename):
   X_encoded = []
   for i in range(n):
       l = int(low[i])
-      if int(high[i]) == high[i]:
-          h = high[i]
+      if high[i] == int(high[i]):
+        h = int(high[i])
       else:
-          h = high[i]+1
+        h = int(high[i])+1
       temp = []
       for j in range(l,h):
           temp.append(f"{j}")
-      X_encoded.append(qcut(X[i], len(temp), labels=temp))
+      X_encoded.append(cut(X[i], len(temp), labels=temp))
 
   Y_encoded = np.array(Y)
 
   # Building the Decision Tree
-  Tree = DecisionTreeClassifier()
+  Tree = DecisionTreeClassifier(max_depth=num)
   X1_encoded = []
   n = len(X_encoded[0])
   for i in range(n):
