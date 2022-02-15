@@ -51,7 +51,7 @@ A Python machine learning library that features various classification, regressi
 
 ## To-Do
 
-- [ ] Explain how to interpret the tree in the report, mention the redndancy of trees
+- [ ] Explain how to interpret the tree in the report, mention the redundancy of trees
 - [ ] Check out if X1_encoded works without pandas.cut and remove tolist() from Y1_encoded
 - [ ] Modularize the SimpleMaze matrix representation using 4-bits (S,G,F,X)
 - [ ] Use a Discrete Observation Space in SimpleMaze
