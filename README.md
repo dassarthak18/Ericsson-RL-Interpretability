@@ -51,10 +51,10 @@ A Python machine learning library that features various classification, regressi
 
 ## To-Do
 
-- [] Modularizing the SimpleMaze matrix representation using 4-bits (S,G,F,X)
-- [] Using a Discrete Observation Space in SimpleMaze
-- [] Updating the reward scheme to encorporate negative reward per new cell visits
-- [] Visualizing the cumulative reward awarded in the DQN training and testing stages
-- [] Explaining how to interpret the tree in the report, and reflecting the other changes
-- [] Checking out if X1_encoded works without pandas.cut and removing tolist() from Y1_encoded
-- [] Accounting for Discrete Observation Space in the database building and tree testing process
+- [ ] Modularizing the SimpleMaze matrix representation using 4-bits (S,G,F,X)
+- [ ] Using a Discrete Observation Space in SimpleMaze
+- [ ] Updating the reward scheme to encorporate negative reward per new cell visits
+- [ ] Visualizing the cumulative reward awarded in the DQN training and testing stages
+- [ ] Explaining how to interpret the tree in the report, and reflecting the other changes
+- [ ] Checking out if X1_encoded works without pandas.cut and removing tolist() from Y1_encoded
+- [ ] Accounting for Discrete Observation Space in the database building and tree testing process
