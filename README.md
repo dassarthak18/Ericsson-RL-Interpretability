@@ -51,7 +51,6 @@ A Python machine learning library that features various classification, regressi
 
 ## To-Do
 
-- [ ] Check out if X1_encoded works without pandas.cut and remove tolist() from Y1_encoded
 - [ ] Modularize the SimpleMaze matrix representation using 4-bits (S,G,F,X)
 - [ ] Use a Discrete Observation Space in SimpleMaze
 - [ ] Account for Discrete Observation Space in the database building and tree testing process
