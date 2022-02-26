@@ -55,4 +55,3 @@ A Python machine learning library that features various classification, regressi
 - [ ] Use a Discrete Observation Space in SimpleMaze
 - [ ] Account for Discrete Observation Space in the database building and tree testing process
 - [ ] Visualize the cumulative reward awarded in the DQN training and testing stages
-- [ ] Update the reward scheme to encorporate negative reward per cell visits
