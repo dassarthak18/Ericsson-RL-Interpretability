@@ -19,7 +19,8 @@ class SimpleMaze(gym.Env):
        Can move up, down, left or right.
        Deterministic or non-deterministic in nature.
 
-       A penalty of -1 for every step taken, -5 if all the flags have been collected.
+       A penalty of -1 for visiting every already explored cell.
+       A penalty of -5 for each step if all the flags have already been collected.
        A reward of +10 for every flag collected.
        A reward of +20 for reaching the goal state.
 
@@ -66,6 +67,7 @@ class SimpleMaze(gym.Env):
                             maze_row.append(0)
                      maze.append(maze_row)
               self.maze = maze
+              self.visited = []
               self.nb_step = 0
               self.nb_flags = 0
               arr = []
@@ -85,6 +87,7 @@ class SimpleMaze(gym.Env):
                             self.y = j
               self.maze[self.x][self.y] = 4 # 4 indicates X
               self.loc = 2
+              self.visited.append((self.x,self.y))
               return [self.x,self.y]
        
        def render(self, mode='human', close=False):
@@ -99,10 +102,10 @@ class SimpleMaze(gym.Env):
        def step(self, action):
 
               done = False
-              if self.nb_flags == int(np.sqrt(self.m*self.n)): # Negative reward for every step taken
+              if self.nb_flags == int(np.sqrt(self.m*self.n)): # Negative reward for each step after collecting all flags
                      reward = -5
               else:
-                     reward = -1
+                     reward = 0
               self.maze[self.x][self.y] = self.loc
               if self.deterministic == True:
                      self.action = action
@@ -120,6 +123,12 @@ class SimpleMaze(gym.Env):
 
               self.loc = self.maze[self.x][self.y]
               self.maze[self.x][self.y] = 4
+
+              if (self.x,self.y) in self.visited:
+                     reward += -1 # Immediate reward of -1 on visiting explored cell
+              else:       
+                     self.visited.append((self.x,self.y))
+
 
               self.nb_step += 1
               
