@@ -18,20 +18,8 @@ def build_tree(env,filename,num=None):
     temp = data[f'Input {i}'].tolist()
     X.append(temp)
   Y = data['Output'].tolist()
-
-  # Categorization of data
-  X_encoded = []
-  for i in range(n):
-      l = int(low[i])
-      if high[i] == int(high[i]):
-        h = int(high[i])
-      else:
-        h = int(high[i])+1
-      temp = []
-      for j in range(l,h):
-          temp.append(f"{j}")
-      X_encoded.append(cut(X[i], len(temp), labels=temp))
-
+  
+  X_encoded = np.array(X)
   Y_encoded = np.array(Y)
 
   # Building the Decision Tree
@@ -43,7 +31,7 @@ def build_tree(env,filename,num=None):
     for j in range(len(X_encoded)):
       arr.append(X_encoded[j][i])
     X1_encoded.append(arr)
-  Tree.fit(X1_encoded, Y_encoded.reshape(-1,1).tolist())
+  Tree.fit(X1_encoded, Y_encoded.reshape(-1,1))
 
   return Tree
 
