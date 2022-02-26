@@ -1,6 +1,7 @@
 import gym
-import matplotlib.pyplot as plt
 import numpy as np
+
+from matplotlib import pyplot as plt
 
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Activation, Flatten
