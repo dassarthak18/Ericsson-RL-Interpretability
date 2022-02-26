@@ -1,7 +1,7 @@
 import numpy as np
 from tqdm import tqdm
 from matplotlib import pyplot as plt
-from pandas import read_csv, cut
+from pandas import read_csv
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from src.data import output
 
