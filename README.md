@@ -54,4 +54,3 @@ A Python machine learning library that features various classification, regressi
 - [ ] Modularize the SimpleMaze matrix representation using 4-bits (S,G,F,X)
 - [ ] Use a Discrete Observation Space in SimpleMaze
 - [ ] Account for Discrete Observation Space in the database building and tree testing process
-- [ ] Visualize the cumulative reward awarded in the DQN training and testing stages
