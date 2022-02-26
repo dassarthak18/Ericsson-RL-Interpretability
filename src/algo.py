@@ -1,4 +1,6 @@
 import gym
+import matplotlib.pyplot as plt
+import numpy as np
 
 from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Activation, Flatten
@@ -23,8 +25,9 @@ def cem(env,steps=100000):
        model.add(Activation('softmax'))
        cem = CEMAgent(model=model, nb_actions=env.action_space.n, memory=EpisodeParameterMemory(limit=50000, window_length=1), batch_size=50, nb_steps_warmup=2000, train_interval=50, elite_frac=0.05)
        cem.compile()
-       cem.fit(env, nb_steps=steps, visualize=False, verbose=1)
-       return model, cem
+       train_history = cem.fit(env, nb_steps=steps, visualize=False, verbose=1)
+       train_rewards = train_history.history['episode_reward']
+       return model, cem, train_rewards
 
 def dqn(env,steps=50000):
        model = Sequential()
@@ -39,8 +42,9 @@ def dqn(env,steps=50000):
        model.add(Activation('linear'))
        dqn = DQNAgent(model=model, nb_actions=env.action_space.n, memory=SequentialMemory(limit=50000, window_length=1), nb_steps_warmup=100, target_model_update=1e-2, policy=BoltzmannQPolicy())
        dqn.compile(Adam(learning_rate=1e-3), metrics=['mse'])
-       dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
-       return model, dqn
+       train_history = dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
+       train_rewards = train_history.history['episode_reward']
+       return model, dqn, train_rewards
 
 def duel_dqn(env,steps=50000):
        model = Sequential()
@@ -55,8 +59,9 @@ def duel_dqn(env,steps=50000):
        model.add(Activation('linear'))
        dqn = DQNAgent(model=model, nb_actions=env.action_space.n, memory=SequentialMemory(limit=50000, window_length=1), nb_steps_warmup=100, enable_dueling_network=True, dueling_type='avg', target_model_update=1e-2, policy=BoltzmannQPolicy())
        dqn.compile(Adam(learning_rate=1e-3), metrics=['mse'])
-       dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
-       return model, dqn
+       train_history = dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
+       train_rewards = train_history.history['episode_reward']
+       return model, dqn, train_rewards
 
 def sarsa(env,steps=50000):
        model = Sequential()
@@ -71,5 +76,15 @@ def sarsa(env,steps=50000):
        model.add(Activation('linear'))
        sarsa = SARSAAgent(model=model, nb_actions=env.action_space.n, nb_steps_warmup=100, policy=BoltzmannQPolicy())
        sarsa.compile(Adam(learning_rate=1e-3), metrics=['mse'])
-       sarsa.fit(env, nb_steps=steps, visualize=False, verbose=1)
-       return model, sarsa
+       train_history = sarsa.fit(env, nb_steps=steps, visualize=False, verbose=1)
+       train_rewards = train_history.history['episode_reward']
+       return model, sarsa, train_rewards
+
+def plot_training(train_rewards):
+       X = np.arange(len(train_rewards)) + 1
+       Y = train_rewards
+       plt.plot(X,Y,marker='o')
+       plt.xlabel('Episode Number')
+       plt.ylabel('Cumulative Reward')
+       plt.title('Training History')
+       return plt
