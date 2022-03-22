@@ -2,7 +2,7 @@ import graphviz
 import numpy as np
 from tqdm import tqdm
 from pandas import read_csv
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from src.data import output
 
 def build_tree(env,filename,num=None):
