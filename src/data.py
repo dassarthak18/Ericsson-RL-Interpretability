@@ -14,10 +14,9 @@ def dataset(env,model,filename="agent_data.csv",num=100000):
 
        # Building a comprehensive list of tuples
        array = []
-       bnd_per_node = int(np.power(num, float(1/n))) # fix upper bound for len(tups)
-       for i in range(n):
-              array.append(np.arange(low[i],high[i],float((high[i] - low[i])/bnd_per_node)).tolist())
        tups = [()]
+       for i in range(n):
+              array.append(np.arange(low[i],high[i]+1).tolist())
        for i in range(n):
               tups = [tup + (a,) for tup in tups for a in array[i]]
 
