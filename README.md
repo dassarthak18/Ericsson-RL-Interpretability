@@ -42,15 +42,10 @@ A Python machine learning library that features various classification, regressi
 
 ## Other Prerequisites
 
+* **Graphviz** - A Python toolkit for drawing graphs specified in DOT language scripts. 
 * **Pandas** - A Python toolkit for data manipulation and analysis.
-* **tqdm** - A Python library to enable iterables to show a smart progress meter. 
+* **tqdm** - A Python library to enable iterables to show a smart progress meter.
 
 ```shell
-  $ sudo pip3 install pandas tqdm
+  $ sudo pip3 install graphviz pandas tqdm
 ```
-
-## To-Do
-
-- [ ] Modularize the SimpleMaze matrix representation using 4-bits (S,G,F,X)
-- [ ] Use a Discrete Observation Space in SimpleMaze
-- [ ] Account for Discrete Observation Space in the database building and tree testing process
