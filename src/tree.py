@@ -1,8 +1,8 @@
+import graphviz
 import numpy as np
 from tqdm import tqdm
-from matplotlib import pyplot as plt
 from pandas import read_csv
-from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.tree import DecisionTreeClassifier
 from src.data import output
 
 def build_tree(env,filename,num=None):
@@ -41,26 +41,30 @@ def visualize_tree(env,Tree):
   class_names = []
   for i in range(n):
     class_names.append(str(i))
-  fig = plt.figure(figsize=(25,20))
-  _ = plot_tree(Tree,class_names=class_names,filled=True)
-  return plt
+  data = export_graphviz(Tree,class_names=class_names,filled=True)
+  graph = graphviz.Source(data, format="png")
+  return graph
 
 # Testing the Decision Tree
-def test_tree(env,model,Tree,num=31830): # Test = floor(Train/pi), Default Train = 100000, Default Test = 31830
+def test_tree(env,model,Tree):
   low = env.observation_space.low
   high = env.observation_space.high
   n = env.observation_space.shape[0]
 
   count = 0
+  
+  array = []
+  tups = [()]
+  for i in range(n):
+    array.append(np.arange(low[i],high[i]+1).tolist())
+  for i in range(n):
+    tups = [tup + (a,) for tup in tups for a in array[i]]
 
-  for k in tqdm(range(num)):
-    rand = []
-    for i in range(n):
-      rand.append(np.random.uniform(low[i],high[i]))
-    true = output(model,tuple(rand))
-    pred = Tree.predict([rand], check_input=True)[0]
+  for k in tqdm(tups):
+    true = output(model,tuple(k))
+    pred = Tree.predict([k], check_input=True)[0]
 
     if true == pred:
       count += 1
 
-  print(f"Instances checked: {num}\nPredictions matched: {count}\nAccuracy: {float(count*100/num)}%")
+  print(f"Instances checked: {len(tups)}\nPredictions matched: {count}\nAccuracy: {float(count*100/len(tups))}%")
