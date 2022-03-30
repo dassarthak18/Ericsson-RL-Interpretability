@@ -1,6 +1,6 @@
 from src.data import output
 
-ACT_DICT = {'0':'U', '1':'D', '2':'L', '3':'R'}
+ACT_DICT = {'0':u'\u2191', '1':u'\u2193', '2':u'\u2190', '3':u'\u2192'}
 
 def print_maze(env,model):
   print("Direction with flags:\n")
