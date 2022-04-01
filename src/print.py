@@ -1,10 +1,11 @@
+from copy import deepcopy
 from src.data import output
 
 ACT_DICT = {'0':u'\u2191', '1':u'\u2193', '2':u'\u2190', '3':u'\u2192'}
 
 def print_maze(env,model):
-  print("Direction with flags:\n")
-  maze = env.maze
+  print("\nDirection with flags:\n")
+  maze = deepcopy(env.maze)
   for i in range(len(maze)):
     for j in range(len(maze[0])):
       start = 0
@@ -12,7 +13,7 @@ def print_maze(env,model):
       flag = 0
       if maze[i][j] == 1:
         flag = 1
-      if maze[i][j] == 2:
+      if maze[i][j] == 4:
         start = 1
       if maze[i][j] == 3:
         goal = 1
@@ -25,12 +26,12 @@ def print_maze(env,model):
     print(s)
 
   print("\nDirection without flags:\n")
-  maze = env.maze
+  maze = deepcopy(env.maze)
   for i in range(len(maze)):
     for j in range(len(maze[0])):
       start = 0
       goal = 0
-      if maze[i][j] == 2:
+      if maze[i][j] == 4:
         start = 1
       if maze[i][j] == 3:
         goal = 1
