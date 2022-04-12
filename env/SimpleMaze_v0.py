@@ -32,14 +32,26 @@ class SimpleMaze(gym.Env):
 
        An episode ends when either goal state or the maximum number of steps is reached, whichever earlier.
        
-       Observation:
-              Type: Box(3)
+      Observation:
+              Type: Box(17)
               Num Observation   Min  Max
               0   x-index       0    m-1
               1   y-index       0    n-1
               2   start         0     1
               3   goal          0     1
               4   flag          0     1
+              5   start_north   0     1
+              6   goal_north    0     1
+              7   flag_north    0     1
+              8   start_south   0     1
+              9   goal_south    0     1
+              10  flag_south    0     1
+              11  start_east    0     1
+              12  goal_east     0     1
+              13  flag_east     0     1
+              14  start_west    0     1
+              15  goal_west     0     1
+              16  flag_west     0     1
 
        Actions:
               Type: Discrete(4)
