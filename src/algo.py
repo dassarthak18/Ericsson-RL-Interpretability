@@ -13,6 +13,8 @@ from rl.agents import SARSAAgent
 from rl.policy import BoltzmannQPolicy
 from rl.memory import EpisodeParameterMemory, SequentialMemory
 
+# add all exploration policies in a Python list and offer choice
+
 def cem(env,steps=100000):
        model = Sequential()
        model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
