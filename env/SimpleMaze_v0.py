@@ -30,6 +30,9 @@ class SimpleMaze(gym.Env):
               2. A penalty of -1 for visiting every already explored cell.
               3. A reward of +10 for every flag collected.
 
+       Once the goal state is reached, a reward of +20 is awarded if all the flags have been collected,
+       failing which, a penalty of -5 is awarded.
+
        An episode ends when either goal state or the maximum number of steps is reached, whichever earlier.
        
       Observation:
@@ -52,6 +55,7 @@ class SimpleMaze(gym.Env):
               14  start_west    0     1
               15  goal_west     0     1
               16  flag_west     0     1
+              17  nb_flags      0     floor(sqrt(m*n))
 
        Actions:
               Type: Discrete(4)
@@ -67,8 +71,8 @@ class SimpleMaze(gym.Env):
               m = 4
               n = 4
               self.action_space = spaces.Discrete(4)
-              low = np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],dtype=np.int_,)
-              high = np.array([m-1,n-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],dtype=np.int_,)
+              low = np.array([0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],dtype=np.int_,)
+              high = np.array([m-1,n-1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,int(np.sqrt(m*n))],dtype=np.int_,)
               self.observation_space = spaces.Box(low, high, dtype=np.int)
               self.m = m
               self.n = n
@@ -89,6 +93,7 @@ class SimpleMaze(gym.Env):
               self.maze[self.x][self.y] = 4 # 4 indicates X
               self.loc = 2
               self.nb_step = 0
+              self.nb_flags = int(np.sqrt(self.m*self.n)) # number of flags left to collect
               self.visited = [(self.x,self.y)]
               # Info of surroundings
               F_N = 0
@@ -127,7 +132,7 @@ class SimpleMaze(gym.Env):
                      S_W = 1
               if self.y != self.n-1 and self.maze[self.x][self.y+1] == 3:
                      G_W = 1
-              return [self.x,self.y,1,0,0,S_N,G_N,F_N,S_S,G_S,F_S,S_E,G_E,F_E,S_W,G_W,F_W]
+              return [self.x,self.y,1,0,0,S_N,G_N,F_N,S_S,G_S,F_S,S_E,G_E,F_E,S_W,G_W,F_W,self.nb_flags]
 
        def render(self, mode='human', close=False):
               print(f"\nNext action:{ACT_DICT[str(self.action)]}")
@@ -185,7 +190,7 @@ class SimpleMaze(gym.Env):
                      self.goal = 1
               
               if self.flag:
-                     # If flag present, then collect the flag - empty the cell later
+                     self.nb_flags -= 1 # If flag present, then collect the flag - empty the cell later
                      reward += 10 # Immediate reward of +10 on collecting a flag
 
               if self.goal:
@@ -193,6 +198,10 @@ class SimpleMaze(gym.Env):
               
               if self.nb_step == self.max_step:
                      done = True # Limit agent to a fixed number of steps
+                     if self.nb_flags == 0:
+                            reward += 20
+                     else:
+                            reward -= 5
               
               # Info of surroundings
               F_N = 0
@@ -233,7 +242,7 @@ class SimpleMaze(gym.Env):
               if self.y != self.n-1 and self.maze[self.x][self.y+1] == 3:
                      G_W = 1
 
-              return [self.x,self.y,self.start,self.goal,self.flag,S_N,G_N,F_N,S_S,G_S,F_S,S_E,G_E,F_E,S_W,G_W,F_W], reward, done, {}
+              return [self.x,self.y,self.start,self.goal,self.flag,S_N,G_N,F_N,S_S,G_S,F_S,S_E,G_E,F_E,S_W,G_W,F_W,self.nb_flags], reward, done, {}
 
        def probability_matrix(self, action):
               """
