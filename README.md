@@ -1,5 +1,5 @@
 # Ericsson-RL-Interpretability
-To run the Jupyter notebook, Python 3.5+ is required. The following prerequisites must also be installed (tested in an Ubuntu 21.10 system).
+To run the Jupyter notebook, Python 3.5+ as well as python3-pip is required. The following prerequisites must also be installed (tested in an Ubuntu 21.10 system).
 
 ## Installing OpenAI Gym
 
@@ -29,7 +29,9 @@ Must be installed to allow usage of OpenAI Gym's Box2D and Atari environments.
 A deep RL library for Keras that has implementations of state-of-the-art RL algorithms such as DQN, CEM and SARSA. Integrates with OpenAI Gym out of the box, and has support for TensorFlow 2. 
 
 ```shell
-  $ sudo pip3 install keras−rl2
+  $ git clone https://github.com/wau/keras-rl2.git
+  $ cd keras-rl2
+  $ sudo pip3 install .
 ```
 
 ## Installing SciKit-Learn
