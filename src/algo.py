@@ -33,7 +33,7 @@ def cem(env,steps=100000):
        train_rewards = train_history.history['episode_reward']
        return model, cem, train_rewards
 
-def dqn(env,steps=50000,i=1):
+def dqn(env,steps=50000,i=1,tau=1):
        model = Sequential()
        model.add(Flatten(input_shape=(1,) + env.observation_space.shape))
        model.add(Dense(16))
@@ -44,7 +44,11 @@ def dqn(env,steps=50000,i=1):
        model.add(Activation('relu'))
        model.add(Dense(env.action_space.n))
        model.add(Activation('linear'))
-       dqn = DQNAgent(model=model, nb_actions=env.action_space.n, memory=SequentialMemory(limit=50000, window_length=1), nb_steps_warmup=100, target_model_update=1e-2, policy=policies[i])
+       if i == 3:
+              policy = BoltzmannQPolicy(tau)
+       else:
+              policy = policies[i]
+       dqn = DQNAgent(model=model, nb_actions=env.action_space.n, memory=SequentialMemory(limit=50000, window_length=1), nb_steps_warmup=100, target_model_update=1e-2, policy=policy)
        dqn.compile(Adam(learning_rate=1e-3), metrics=['mse'])
        train_history = dqn.fit(env, nb_steps=steps, visualize=False, verbose=1)
        train_rewards = train_history.history['episode_reward']
