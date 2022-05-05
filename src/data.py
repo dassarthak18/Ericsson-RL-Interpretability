@@ -6,31 +6,30 @@ def output(model,tup):
        x = np.array([list(tup)]).reshape(1,1,len(tup))
        return np.argmax(model.predict(x))
 
-def dataset(env,model,filename="agent_data.csv",num=100000):
-       # Obtaining parameters for ANN to DT conversion
-       low = env.observation_space.low.tolist()
-       high = env.observation_space.high.tolist()
-       n = env.observation_space.shape[0]
-
-       # Building a comprehensive list of tuples
-       array = []
-       tups = [()]
-       for i in range(n):
-              array.append(np.arange(low[i],high[i]+1).tolist())
-       for i in range(n):
-              tups = [tup + (a,) for tup in tups for a in array[i]]
-
-       # Saving the output in a csv file
+def dataset(env,model,filename="agent_data.csv",steps=100000):
+       i = 0
+       observation = env.reset()
+       done = False
        f = open(filename, 'w')
        string = ''
-       for i in range(n):
-           string = string + "Input " + str(i) + ','
+       for i in range(len(observation)):
+              string = string + "Input " + str(i) + ','
        string = string + "Output\n"
        f.write(string)
-       for tup in tqdm(tups):
-           string = ''
-           for i in range(n):
-               string = string + str(tup[i]) + ','
-           string = string + str(output(model,tup)) + "\n"
-           f.write(string)
+       pbar = tqdm(total = steps)
+       while i < steps:
+              action = output(model,observation)
+              string = ''
+              for j in range(len(observation)):
+                     string = string + str(observation[j]) + ','
+              string = string + str(action) + "\n"
+              f.write(string)
+              if done == True:
+                     observation = env.reset()
+                     done = False
+              else:
+                     observation, reward, done, info = env.step(action)
+              i = i + 1
+              pbar.update(1)
+       pbar.close()
        f.close()
