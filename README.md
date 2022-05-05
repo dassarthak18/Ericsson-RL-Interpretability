@@ -50,4 +50,5 @@ A Python machine learning library that features various classification, regressi
 
 ```shell
   $ sudo pip3 install graphviz pandas tqdm
+  $ sudo apt install graphviz
 ```
