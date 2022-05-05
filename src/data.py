@@ -12,8 +12,8 @@ def dataset(env,model,filename="agent_data.csv",steps=100000):
        done = False
        f = open(filename, 'w')
        string = ''
-       for i in range(len(observation)):
-              string = string + "Input " + str(i) + ','
+       for j in range(len(observation)):
+              string = string + "Input " + str(j) + ','
        string = string + "Output\n"
        f.write(string)
        pbar = tqdm(total = steps)
