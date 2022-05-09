@@ -45,10 +45,11 @@ A Python machine learning library that features various classification, regressi
 ## Other Prerequisites
 
 * **Graphviz** - A Python toolkit for drawing graphs specified in DOT language scripts. 
+* **Matplotlib** - A Python plotting library, specifically for NumPy.
 * **Pandas** - A Python toolkit for data manipulation and analysis.
 * **tqdm** - A Python library to enable iterables to show a smart progress meter.
 
 ```shell
-  $ sudo pip3 install graphviz pandas tqdm
+  $ sudo pip3 install graphviz matplotlib pandas tqdm
   $ sudo apt install graphviz
 ```
