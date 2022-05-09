@@ -1,5 +1,5 @@
 # Ericsson-RL-Interpretability
-To run the Jupyter notebook, Python 3.5+ as well as python3-pip is required. The following prerequisites must also be installed (tested in an Ubuntu 21.10 system).
+To run the Jupyter notebooks, Python 3.5+ as well as python3-pip is required. The following prerequisites must also be installed (tested in an Ubuntu 21.10 system).
 
 ## Installing OpenAI Gym
 
